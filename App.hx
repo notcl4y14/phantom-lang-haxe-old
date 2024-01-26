@@ -1,15 +1,27 @@
 import utils.*;
+import lang.Lexer;
+import lang.Token;
+import lang.TokenType;
 
 class App {
-
-	// public function readFile(name: String): Null<String> {
-	// 	if (!sys.FileSystem.exists(name)) return (null);
-	// 	var content: String = sys.io.File.getContent(name);
-	// 	return (content);
-	// }
 	
 	public function new() {
-		Sys.println(Filesystem.readFile("App.hx"));
+		var args = Sys.args();
+		// Sys.println(args);
+
+		var code = Filesystem.readFile(args[0]);
+
+		if (code == null) {
+			Sys.println('No file "${args[0]}" found');
+			return;
+		}
+
+		var lexer = new Lexer(args[0], code);
+		var tokens = lexer.lexerize();
+
+		for (token in tokens) {
+			Sys.println(token._string());
+		}
 	}
 
 	static public function main() {
