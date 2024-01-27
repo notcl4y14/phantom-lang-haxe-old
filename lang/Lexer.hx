@@ -32,7 +32,8 @@ class Lexer {
 		var tokens: Array<Token> = [];
 
 		while (!this.isEOF()) {
-			var char = this.at();
+			var pos = this.pos.clone();
+			// var char = this.at();
 
 			// switch (char) {
 			// 	case "+":
@@ -44,13 +45,45 @@ class Lexer {
 			// 		tokens.push( new Token(TokenType.Operator, char) );
 			// }
 
-			if (char == "+" || char == "-" || char == "*" || char == "/" || char == "%" || char == "^") {
-				tokens.push( new Token(TokenType.Operator, char) );
+			var token: Token = this.lexerizeToken();
+
+			if (token == null) {
+				this.advance();
+				continue;
 			}
+
+			// Haxe's compiler won't calm down until I use try-catch block
+			try {
+
+				if (token.pos[0] == null) {
+					token.pos[0] = pos.clone();
+				}
+
+				if (token.pos[1] == null) {
+					token.pos[1] = pos.advance().clone();
+				}
+
+			} catch (e) {}
+
+			// if (token != null) tokens.push(token);
+
+			tokens.push(token);
 
 			this.advance();
 		}
 
 		return (tokens);
+	}
+
+	public function lexerizeToken (): Null<Token> {
+		var char = this.at();
+
+		if (char == " " || char == "\t" || char == "\r" || char == "\n") {
+			return (null);
+		} else if (char == "+" || char == "-" || char == "*" || char == "/" || char == "%" || char == "^") {
+			return (new Token(TokenType.Operator, char));
+		}
+
+		return (null);
 	}
 }

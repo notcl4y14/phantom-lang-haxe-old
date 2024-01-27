@@ -3,6 +3,12 @@
 // https://github.com/notcl4y14/phantom-lang
 // -----------------------------------------------
 
+// 27/1/2024
+- Added positions to tokens
+- Added whitespace to lexer
+- Added depths to _string()-s
+- Added _string() to Position
+
 // 26/1/2024
 - Created lang
 	+ Token

@@ -16,11 +16,11 @@ class App {
 			return;
 		}
 
-		var lexer = new Lexer(args[0], code);
-		var tokens = lexer.lexerize();
+		var lexer: Lexer = new Lexer(args[0], code);
+		var tokens: Array<Token> = lexer.lexerize();
 
 		for (token in tokens) {
-			Sys.println(token._string());
+			Sys.println(token._string(2));
 		}
 	}
 

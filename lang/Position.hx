@@ -28,4 +28,21 @@ class Position {
 	public function clone () {
 		return (new Position(this.filename, this.index, this.line, this.column));
 	}
+
+	public function _string (depth: Int = 1): String {
+		if (depth == 0)
+			return ('Position {}');
+
+		if (depth == 1)
+			return ('Position { line: ${this.line}, column: ${this.column} }');
+
+		if (depth == 2)
+			return ('Position { index: ${this.index}, line: ${this.line}, column: ${this.column} }');
+
+		if (depth == 3)
+			return ('Position { filename: "${this.filename}", index: ${this.index}, line: ${this.line}, column: ${this.column} }');
+
+
+		return ('Position { index: ${this.index}, line: ${this.line}, column: ${this.column} }');
+	}
 }
